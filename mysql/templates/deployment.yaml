@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mysql
+  namespace: expense-1
+  # these labels are deployment related labels
+  labels:
+    component: mysql
+    project: expense-1
+    tier: db
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      component: mysql
+      project: expense-1
+      tier: db
+  # pod definition
+  template:
+    metadata:
+      labels:
+        component: mysql
+        project: expense-1
+        tier: db
+    spec:
+      containers:
+      - name: mysql
+        image: ushanayana/mysql:{{ .Values.deployment.imageVersion }}
